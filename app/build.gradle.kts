@@ -18,8 +18,8 @@ plugins {
     id("java")
     id("application")
     id("jvm-test-suite")
-    id("com.github.ben-manes.versions") version "0.51.0"
-    id("io.freefair.lombok") version "8.13"
+    id("com.github.ben-manes.versions") version "0.52.0"
+    id("io.freefair.lombok") version "8.13.1"
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
 }
 
@@ -37,6 +37,9 @@ dependencies {
     implementation(libs.guava)
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     implementation("org.apache.commons:commons-lang3:3.17.0")
+
+    implementation("info.picocli:picocli:4.7.7")
+    annotationProcessor("info.picocli:picocli-codegen:4.7.7")
 }
 
 application {
@@ -57,4 +60,10 @@ tasks.jar {
             "Implementation-Version" to project.version
         )
     }
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.addAll(arrayOf(
+        "-Aproject=${project.group}/${project.name}"
+    ))
 }

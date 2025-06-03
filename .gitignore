@@ -4,5 +4,6 @@
 # Ignore Gradle build output directory
 build
 
+**/bin/default/**
 **/bin/main/**
 **/bin/test/**

@@ -21,6 +21,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.52.0"
     id("io.freefair.lombok") version "8.13.1"
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
+    id("com.gradleup.shadow") version "9.3.0"
 }
 
 repositories {
@@ -33,12 +34,15 @@ dependencies {
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    // This dependency is used by the application.
     implementation(libs.guava)
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     implementation("org.apache.commons:commons-lang3:3.17.0")
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.19.0")
 
-    // implementation("info.picocli:picocli:4.7.7")
+    // https://mvnrepository.com/artifact/info.picocli/picocli
+    implementation("info.picocli:picocli:4.7.7")
+    // https://mvnrepository.com/artifact/info.picocli/picocli-codegen
     annotationProcessor("info.picocli:picocli-codegen:4.7.7")
 }
 

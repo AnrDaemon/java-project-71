@@ -2,6 +2,7 @@ package io.hexlet.code;
 
 import java.util.concurrent.Callable;
 
+import org.rootdir.hexlet.java.m2k.DiffFormatStylish;
 import org.rootdir.hexlet.java.m2k.FileDiffer;
 
 import picocli.CommandLine;
@@ -30,9 +31,7 @@ public class App implements Callable<Integer> {
     public Integer call() throws Exception { // your business logic goes here...
         System.out.println(this.getGreeting());
         var diff = (new FileDiffer(left, right)).read().diff();
-        for (var e : diff) {
-            System.out.printf("%s: %s\n", e.getName(), e.getStatus());
-        }
+        System.out.print(DiffFormatStylish.format(diff));
         return 0;
     }
 

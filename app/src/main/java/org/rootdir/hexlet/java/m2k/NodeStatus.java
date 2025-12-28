@@ -7,8 +7,14 @@ import lombok.Getter;
 @Getter
 public class NodeStatus {
 
+    public static final String ADDED = "added";
+    public static final String UPDATED = "updated";
+    public static final String REMOVED = "removed";
+    public static final String UNCHANGED = "unchanged";
+
     private final String name;
-    private final Object content;
+    private final Object oldValue;
+    private final Object newValue;
     private final String status;
 
 }

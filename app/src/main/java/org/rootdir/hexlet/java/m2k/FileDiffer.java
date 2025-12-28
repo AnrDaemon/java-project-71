@@ -13,10 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FileDiffer {
 
-    public final String ADDED = "added";
-    public final String UPDATED = "updated";
-    public final String REMOVED = "removed";
-
     private final Path left;
     private final Path right;
 
@@ -41,19 +37,21 @@ public class FileDiffer {
 
         for (var l : parsedLeft.entrySet()) {
             if (!parsedRight.containsKey(l.getKey())) {
-                result.add(new NodeStatus(l.getKey(), l.getValue(), REMOVED));
+                result.add(new NodeStatus(l.getKey(), l.getValue(), null, NodeStatus.REMOVED));
             } else if (!l.getValue().toString().equals(parsedRight.get(l.getKey()).toString())) {
-                result.add(new NodeStatus(l.getKey(), l.getValue(), UPDATED));
+                result.add(new NodeStatus(l.getKey(), l.getValue(), parsedRight.get(l.getKey()), NodeStatus.UPDATED));
+            } else {
+                result.add(new NodeStatus(l.getKey(), l.getValue(), null, NodeStatus.UNCHANGED));
             }
         }
 
         for (var r : parsedRight.entrySet()) {
             if (!parsedLeft.containsKey(r.getKey())) {
-                result.add(new NodeStatus(r.getKey(), r.getValue(), ADDED));
+                result.add(new NodeStatus(r.getKey(), null, r.getValue(), NodeStatus.ADDED));
             }
         }
 
-        // result.sort(Comparator.comparing(NodeStatus::getName));
+        result.sort(Comparator.comparing(NodeStatus::getName));
 
         return result;
     }
@@ -63,7 +61,7 @@ public class FileDiffer {
 
         if (obj.isObject()) {
             for (var o : obj.properties()) {
-                result.putAll(flatten(o.getValue(), path + "/" + o.getKey()));
+                result.putAll(flatten(o.getValue(), /* path + "/" + */ o.getKey()));
             }
         } else {
             result.put(path, obj);

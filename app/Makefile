@@ -4,7 +4,11 @@ all: build
 build:
 	./gradlew build
 
-run:
-	java -jar build/libs/gendiff-1.0-SNAPSHOT-all.jar src/test/resources/file1.json src/test/resources/file2.json
+check:
+	./gradlew check
 
-.PHONY: all build run
+run: FORMAT ?= json
+run:
+	java -jar build/libs/gendiff-1.0-SNAPSHOT-all.jar src/test/resources/file1.$(FORMAT) src/test/resources/file2.$(FORMAT)
+
+.PHONY: all build check run

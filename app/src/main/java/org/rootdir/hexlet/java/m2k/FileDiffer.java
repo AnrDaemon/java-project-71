@@ -13,25 +13,36 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FileDiffer {
 
-    private final Path left;
-    private final Path right;
+    private final Path leftPath;
+    private final Path rightPath;
 
     private Map<String, JsonNode> parsedLeft;
     private Map<String, JsonNode> parsedRight;
 
     public FileDiffer(String left, String right) {
-        this.left = Paths.get(left).toAbsolutePath().normalize();
-        this.right = Paths.get(right).toAbsolutePath().normalize();
+        this.leftPath = Paths.get(left).toAbsolutePath().normalize();
+        this.rightPath = Paths.get(right).toAbsolutePath().normalize();
     }
 
+    /**
+     * Read and parse the files provided by constructor.
+     *
+     * @return Object chaining reference.
+     * @throws Exception
+     */
     public FileDiffer read() throws Exception {
         var jsonMapper = new ObjectMapper();
-        parsedLeft = flatten(jsonMapper.readTree(left.toFile()), "");
-        parsedRight = flatten(jsonMapper.readTree(right.toFile()), "");
+        parsedLeft = flatten(jsonMapper.readTree(leftPath.toFile()), "");
+        parsedRight = flatten(jsonMapper.readTree(rightPath.toFile()), "");
 
         return this;
     }
 
+    /**
+     * Compare nodes and build the list of changes.
+     *
+     * @return The list of changes.
+     */
     public List<NodeStatus> diff() {
         var result = new ArrayList<NodeStatus>();
 
@@ -56,6 +67,13 @@ public class FileDiffer {
         return result;
     }
 
+    /**
+     * Flattens the structure to a map path-node pairs.
+     *
+     * @param obj  The list of nodes (list root node).
+     * @param path The list (root node) path name.
+     * @return A map of full node paths and values.
+     */
     public Map<String, JsonNode> flatten(JsonNode obj, String path) {
         var result = new HashMap<String, JsonNode>();
 

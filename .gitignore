@@ -9,3 +9,5 @@ build
 **/bin/default/**
 **/bin/main/**
 **/bin/test/**
+
+!/.github/

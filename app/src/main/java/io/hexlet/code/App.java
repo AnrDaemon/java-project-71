@@ -34,7 +34,7 @@ public class App implements Callable<Integer> {
     @Override
     public final Integer call() throws Exception { // your business logic goes here...
         System.out.println(this.getGreeting());
-        var diff = (new FileDiffer(left, right)).read().diff();
+        var diff = FileDiffer.fromPaths(left, right).diff();
         System.out.print(DiffFormatStylish.format(diff));
         return 0;
     }

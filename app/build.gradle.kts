@@ -17,16 +17,35 @@ java {
 plugins {
     id("java")
     id("application")
+    id("checkstyle")
     id("jvm-test-suite")
     id("com.github.ben-manes.versions") version "0.52.0"
     id("io.freefair.lombok") version "8.13.1"
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
     id("com.gradleup.shadow") version "9.3.0"
+    id("org.sonarqube") version "7.2.2.6593"
 }
 
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+}
+
+checkstyle {
+    toolVersion = "12.3.1"
+
+    configFile = file("config/checkstyle/checkstyle.xml")
+
+    isIgnoreFailures = true
+    maxWarnings = 0
+    maxErrors = 0
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "AnrDaemon_java-project-71")
+        property("sonar.organization", "anrdaemon")
+    }
 }
 
 dependencies {

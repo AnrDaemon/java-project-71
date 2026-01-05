@@ -8,12 +8,10 @@ public class DiffFormatStylish {
 
     private static String printf(String c, String key, JsonNode node) {
         String value;
-        if (node.isNumber()) {
-            value = String.valueOf(node.asDouble());
-        } else if (node.isNull()) {
-            value = "<null>";
-        } else {
+        if (node.isValueNode()) {
             value = node.asText();
+        } else {
+            value = node.toString();
         }
         return String.format(" %s %s: %s\n", c, key, value);
     }

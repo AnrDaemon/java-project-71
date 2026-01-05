@@ -39,4 +39,25 @@ public class DiffFormatStylishTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void formatRemovedNestedObjectTest() throws Exception {
+        var mapper = new ObjectMapper();
+        var left = mapper.readTree("{\"removed\":{\"nested\":\"yes\"}}");
+        var right = mapper.readTree("{}");
+        var diff = FileDiffer.fromParsed(left, right).parse().diff();
+        var result = DiffFormatStylish.format(diff);
+        var expected = "{\n - removed: {\"nested\":\"yes\"}\n}\n";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void formatRemovedNestedArrayTest() throws Exception {
+        var mapper = new ObjectMapper();
+        var left = mapper.readTree("{\"removed\": [1, 2, 5]}");
+        var right = mapper.readTree("{}");
+        var diff = FileDiffer.fromParsed(left, right).parse().diff();
+        var result = DiffFormatStylish.format(diff);
+        var expected = "{\n - removed: [1,2,5]\n}\n";
+        assertEquals(expected, result);
+    }
 }

@@ -24,6 +24,7 @@ plugins {
     id("se.patrikerdes.use-latest-versions") version "0.2.19"
     id("com.gradleup.shadow") version "9.3.0"
     id("org.sonarqube") version "7.2.2.6593"
+    id("jacoco")
 }
 
 repositories {

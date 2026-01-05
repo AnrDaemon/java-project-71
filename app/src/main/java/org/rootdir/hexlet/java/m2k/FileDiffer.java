@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import lombok.Getter;
+import lombok.val;
 
 public class FileDiffer {
 
@@ -60,14 +61,14 @@ public class FileDiffer {
             default -> FileDiffer.FORMAT_JSON;
         });
 
-        return result.read().parse();
+        return result.read();
     }
 
 
     public static FileDiffer fromParsed(JsonNode left, JsonNode right) {
         var result = new FileDiffer(left, right);
 
-        return result.parse();
+        return result;
     }
 
 
@@ -108,9 +109,22 @@ public class FileDiffer {
      *
      * @return Object chaining reference.
      */
-    private FileDiffer parse() {
-        this.parsedLeft = flatten(this.leftRead, "");
-        this.parsedRight = flatten(this.rightRead, "");
+    public FileDiffer parse() {
+        this.parsedLeft = flatten(this.leftRead);
+        this.parsedRight = flatten(this.rightRead);
+
+        return this;
+    }
+
+
+    /**
+     * Read and parse the files provided by constructor.
+     *
+     * @return Object chaining reference.
+     */
+    public FileDiffer parseRecursive() {
+        this.parsedLeft = flatten(this.leftRead, "$", ".");
+        this.parsedRight = flatten(this.rightRead, "$", ".");
 
         return this;
     }
@@ -145,18 +159,45 @@ public class FileDiffer {
     }
 
     /**
-     * Flattens the structure to a map path-node pairs.
+     * Flattens the structure to a path-node pairs map.
+     *
+     * This is a recursive version of a function.
      *
      * @param obj The list of nodes (list root node).
-     * @param path The list (root node) path name.
+     * @param path The list (root node) path name. Supply "$" to get traditional JSON notation of the
+     *        full paths (like, `$.path.other.etc`).
+     * @param sep Path names separator.
      * @return A map of full node paths and values.
      */
-    public Map<String, JsonNode> flatten(JsonNode obj, String path) {
+    public static Map<String, JsonNode> flatten(JsonNode obj, String path, String sep) {
         var result = new HashMap<String, JsonNode>();
 
         if (obj.isObject()) {
             for (var o : obj.properties()) {
-                result.putAll(flatten(o.getValue(), /* path + "/" + */ o.getKey()));
+                result.putAll(flatten(o.getValue(), path + sep + o.getKey(), sep));
+            }
+        } else {
+            result.put(path, obj);
+        }
+
+        return result;
+    }
+
+    /**
+     * Converts the structure to a path-node pairs map.
+     *
+     * This is a flat version of the full function.
+     *
+     * @param obj The list of nodes (list root node).
+     * @return A map of node paths and values.
+     */
+    public static Map<String, JsonNode> flatten(JsonNode obj) {
+        val path = "";
+        var result = new HashMap<String, JsonNode>();
+
+        if (obj.isObject()) {
+            for (var o : obj.properties()) {
+                result.put(o.getKey(), o.getValue());
             }
         } else {
             result.put(path, obj);

@@ -20,9 +20,12 @@ public class App implements Callable<Integer> {
     @Parameters(index = "1", paramLabel = "filepath2", description = "path to second file")
     private String right;
 
-    @Option(paramLabel = "format", defaultValue = "stylish",
-            description = "output format [default: stylish]", names = {"-f", "--format"})
+    @Option(paramLabel = "format", defaultValue = "stylish", description = "output format [default: stylish]",
+            names = {"-f", "--format"})
     private String outputFormat;
+
+    @Option(paramLabel = "recursive", description = "recursively compare tree structure", names = {"-R", "--recursive"})
+    private boolean recursive = false;
 
     public final String getGreeting() {
         return "Hello World!";
@@ -34,14 +37,15 @@ public class App implements Callable<Integer> {
     @Override
     public final Integer call() throws Exception { // your business logic goes here...
         System.out.println(this.getGreeting());
-        var diff = FileDiffer.fromPaths(left, right).diff();
-        System.out.print(DiffFormatStylish.format(diff));
+        var differ = FileDiffer.fromPaths(left, right);
+        differ = recursive ? differ.parseRecursive() : differ.parse();
+        System.out.print(DiffFormatStylish.format(differ.diff()));
         return 0;
     }
 
     /**
      *
-     * @param args String[] The command line arguments.
+     * @param args The command line arguments.
      */
     public static final void main(String[] args) {
         int exitCode = 0;

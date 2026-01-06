@@ -1,19 +1,39 @@
 package org.rootdir.hexlet.java.m2k;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class DiffFormatStylish {
 
     private static String printf(String c, String key, JsonNode node) {
-        String value;
-        if (node.isValueNode()) {
-            value = node.asText();
-        } else {
-            value = node.toString();
-        }
+        var value = formatValue(node);
         return String.format(" %s %s: %s\n", c, key, value);
+    }
+
+    private static String formatValue(JsonNode node) {
+        return node.isValueNode() ? node.asText() : formatObject(node);
+    }
+
+    private static String formatObject(JsonNode node) {
+        var result = new StringBuilder();
+
+        if (!node.isContainerNode()) {
+            throw new IllegalArgumentException("Given value is not a valid rederable node");
+        }
+
+        result.append(node.isArray() ? "[" : "{");
+        Stream<String> stream;
+        if (node.isArray()) {
+            stream = node.valueStream().map((n) -> n.isValueNode() ? n.asText() : formatObject(n));
+        } else {
+            stream = node.propertyStream().map((n) -> (node.isObject() ? n.getKey() + "=" : "")
+                    + (n.getValue().isValueNode() ? n.getValue().asText() : formatObject(n.getValue())));
+        }
+        result.append(stream.collect(Collectors.joining(", ")));
+
+        return result.append(node.isArray() ? "]" : "}").toString();
     }
 
     public static String format(List<NodeStatus> diff) {

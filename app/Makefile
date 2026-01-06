@@ -2,7 +2,7 @@
 all: build
 
 build:
-	./gradlew build
+	./gradlew build test jacocoTestReport sonar
 
 check:
 	./gradlew check

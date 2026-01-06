@@ -93,3 +93,10 @@ tasks.withType<JavaCompile> {
         "-Aproject=${project.group}/${project.name}"
     ))
 }
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+    }
+}

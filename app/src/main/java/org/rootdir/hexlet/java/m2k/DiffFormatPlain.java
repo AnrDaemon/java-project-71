@@ -36,7 +36,7 @@ public class DiffFormatPlain {
     }
 
     public static String format(List<NodeStatus> diff) {
-        var result = new StringBuilder("\n");
+        var result = new StringBuilder("");
         for (var e : diff) {
             switch (e.getStatus()) {
                 case NodeStatus.ADDED:

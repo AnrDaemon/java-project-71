@@ -34,8 +34,7 @@ public class App implements Callable<Integer> {
      * Main application method.
      */
     @Override
-    public final Integer call() throws Exception { // your business logic goes here...
-        System.out.println(this.getGreeting());
+    public final Integer call() throws Exception {
         var differ = FileDiffer.fromPaths(left, right);
         differ = recursive ? differ.parseRecursive() : differ.parse();
         switch (this.outputFormat) {

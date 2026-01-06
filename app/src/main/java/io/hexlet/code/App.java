@@ -1,10 +1,9 @@
 package io.hexlet.code;
 
 import java.util.concurrent.Callable;
-
+import org.rootdir.hexlet.java.m2k.DiffFormatPlain;
 import org.rootdir.hexlet.java.m2k.DiffFormatStylish;
 import org.rootdir.hexlet.java.m2k.FileDiffer;
-
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -39,7 +38,15 @@ public class App implements Callable<Integer> {
         System.out.println(this.getGreeting());
         var differ = FileDiffer.fromPaths(left, right);
         differ = recursive ? differ.parseRecursive() : differ.parse();
-        System.out.print(DiffFormatStylish.format(differ.diff()));
+        switch (this.outputFormat) {
+            case "plain":
+                System.out.print(DiffFormatPlain.format(differ.diff()));
+                break;
+
+            default:
+                System.out.print(DiffFormatStylish.format(differ.diff()));
+                break;
+        }
         return 0;
     }
 

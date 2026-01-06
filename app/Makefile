@@ -7,9 +7,13 @@ build:
 check:
 	./gradlew check
 
-run: FORMAT ?= json
+run: IN_FORMAT ?= json
+run: OUT_FORMAT ?= stylish
 run: VARIANT ?= flat
 run:
-	java -jar build/libs/gendiff-1.0-SNAPSHOT-all.jar src/test/resources/file1-$(VARIANT).$(FORMAT) src/test/resources/file2-$(VARIANT).$(FORMAT)
+	java -jar build/libs/gendiff-1.0-SNAPSHOT-all.jar --format $(OUT_FORMAT) src/test/resources/file1-$(VARIANT).$(IN_FORMAT) src/test/resources/file2-$(VARIANT).$(IN_FORMAT)
 
-.PHONY: all build check run
+help:
+	java -jar build/libs/gendiff-1.0-SNAPSHOT-all.jar --help
+
+.PHONY: all build check help run

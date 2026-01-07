@@ -42,6 +42,10 @@ checkstyle {
     maxErrors = 0
 }
 
+jacoco {
+    toolVersion = "0.8.13"
+}
+
 sonar {
     properties {
         property("sonar.projectKey", "AnrDaemon_java-project-71")
@@ -76,6 +80,7 @@ application {
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.jar {
@@ -92,4 +97,12 @@ tasks.withType<JavaCompile> {
     options.compilerArgs.addAll(arrayOf(
         "-Aproject=${project.group}/${project.name}"
     ))
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+    }
 }

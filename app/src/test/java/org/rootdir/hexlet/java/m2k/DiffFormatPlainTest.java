@@ -40,6 +40,28 @@ public class DiffFormatPlainTest {
     }
 
     @Test
+    void formatUpdatedBooleanValueTest() throws Exception {
+        var mapper = new ObjectMapper();
+        var left = mapper.readTree("{\"updated\":false}");
+        var right = mapper.readTree("{\"updated\":true}");
+        var diff = FileDiffer.fromParsed(left, right).parse().diff();
+        var result = DiffFormatPlain.format(diff);
+        var expected = "Property 'added' was added with value: 'yes'\n";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void formatUpdatedNullToNumericValueTest() throws Exception {
+        var mapper = new ObjectMapper();
+        var left = mapper.readTree("{\"updated\":null}");
+        var right = mapper.readTree("{\"updated\":123}");
+        var diff = FileDiffer.fromParsed(left, right).parse().diff();
+        var result = DiffFormatPlain.format(diff);
+        var expected = "Property 'added' was added with value: 'yes'\n";
+        assertEquals(expected, result);
+    }
+
+    @Test
     void formatRemovedValueTest() throws Exception {
         var mapper = new ObjectMapper();
         var left = mapper.readTree("{\"removed\":\"yes\"}");
@@ -47,6 +69,17 @@ public class DiffFormatPlainTest {
         var diff = FileDiffer.fromParsed(left, right).parse().diff();
         var result = DiffFormatPlain.format(diff);
         var expected = "Property 'removed' was removed\n";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void formatUnchangedValueTest() throws Exception {
+        var mapper = new ObjectMapper();
+        var left = mapper.readTree("{\"unchanged\":\"yes\"}");
+        var right = mapper.readTree("{\"unchanged\":\"yes\"}");
+        var diff = FileDiffer.fromParsed(left, right).parse().diff();
+        var result = DiffFormatPlain.format(diff);
+        var expected = "";
         assertEquals(expected, result);
     }
 }

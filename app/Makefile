@@ -1,8 +1,11 @@
 
 all: build
 
+clean:
+	./gradlew clean --info
+
 build:
-	./gradlew build test jacocoTestReport sonar
+	./gradlew build sonar --info
 
 check:
 	./gradlew check
@@ -16,4 +19,4 @@ run:
 help:
 	java -jar build/libs/gendiff-1.0-SNAPSHOT-all.jar --help
 
-.PHONY: all build check help run
+.PHONY: all build check clean help run

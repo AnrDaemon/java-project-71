@@ -1,0 +1,35 @@
+package org.rootdir.hexlet.java.m2k;
+
+import java.util.List;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class DiffFormatJson {
+
+    public static String format(List<NodeStatus> diff) {
+        var mapper = new ObjectMapper();
+        var result = mapper.createObjectNode();
+        for (var e : diff) {
+            var changeNode = mapper.createObjectNode();
+            changeNode.put("changeType", e.getStatus());
+            switch (e.getStatus()) {
+                case NodeStatus.ADDED:
+                    changeNode.set("newValue", (JsonNode) e.getNewValue());
+                    break;
+
+                case NodeStatus.UPDATED:
+                    changeNode.set("oldValue", (JsonNode) e.getOldValue());
+                    changeNode.set("newValue", (JsonNode) e.getNewValue());
+
+                case NodeStatus.REMOVED:
+                default:
+                    changeNode.set("oldValue", (JsonNode) e.getOldValue());
+                    break;
+            }
+            result.set(e.getName(), changeNode);
+        }
+
+
+        return result.toPrettyString();
+    }
+}

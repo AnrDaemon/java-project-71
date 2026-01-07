@@ -1,6 +1,7 @@
 package io.hexlet.code;
 
 import java.util.concurrent.Callable;
+import org.rootdir.hexlet.java.m2k.DiffFormatJson;
 import org.rootdir.hexlet.java.m2k.DiffFormatPlain;
 import org.rootdir.hexlet.java.m2k.DiffFormatStylish;
 import org.rootdir.hexlet.java.m2k.FileDiffer;
@@ -40,6 +41,10 @@ public class App implements Callable<Integer> {
         switch (this.outputFormat) {
             case "plain":
                 System.out.print(DiffFormatPlain.format(differ.diff()));
+                break;
+
+            case "json":
+                System.out.print(DiffFormatJson.format(differ.diff()));
                 break;
 
             default:

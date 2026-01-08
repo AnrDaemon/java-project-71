@@ -106,3 +106,7 @@ tasks.jacocoTestReport {
         csv.required.set(false)
     }
 }
+
+tasks.register("install") {
+    dependsOn("installShadowDist")
+}

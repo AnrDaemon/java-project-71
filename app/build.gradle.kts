@@ -5,7 +5,7 @@
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/8.8/userguide/building_java_projects.html in the Gradle documentation.
  */
 
-group = "hexlet"
+group = "hexlet.code"
 version = "1.0-SNAPSHOT"
 
 java {

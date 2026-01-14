@@ -1,8 +1,12 @@
 package org.rootdir.hexlet.java.m2k;
 
 import java.util.List;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 public class DiffFormatJson {
 
@@ -29,7 +33,16 @@ public class DiffFormatJson {
             result.set(e.getName(), changeNode);
         }
 
+        DefaultIndenter lfIndenter = new DefaultIndenter("  ", "\n");
+        DefaultPrettyPrinter printer = new DefaultPrettyPrinter();
+        printer.indentObjectsWith(lfIndenter);
+        printer.indentArraysWith(lfIndenter);
+        ObjectWriter writer = mapper.writer(printer);
 
-        return result.toPrettyString();
+        try {
+            return writer.writeValueAsString(result);
+        } catch (JsonProcessingException e) {
+            return null;
+        }
     }
 }

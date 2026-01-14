@@ -10,7 +10,8 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 1.0", description = "Compares two configuration files and shows a difference.")
+@Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 1.0",
+        description = "Compares two configuration files and shows a difference.")
 public class App implements Callable<Integer> {
 
     @Parameters(index = "0", paramLabel = "filepath1", description = "path to first file")
@@ -19,12 +20,11 @@ public class App implements Callable<Integer> {
     @Parameters(index = "1", paramLabel = "filepath2", description = "path to second file")
     private String right;
 
-    @Option(paramLabel = "format", defaultValue = "stylish", description = "output format [default: stylish]", names = {
-            "-f", "--format" })
+    @Option(paramLabel = "format", defaultValue = "stylish", description = "output format [default: stylish]",
+            names = {"-f", "--format"})
     private String outputFormat;
 
-    @Option(paramLabel = "recursive", description = "recursively compare tree structure", names = { "-R",
-            "--recursive" })
+    @Option(paramLabel = "recursive", description = "recursively compare tree structure", names = {"-R", "--recursive"})
     private boolean recursive = false;
 
     public final String getGreeting() {

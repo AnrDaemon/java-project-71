@@ -65,10 +65,10 @@ public class Differ {
     public static Differ fromPaths(Path left, Path right) throws Exception {
         var lExt = Differ.getFileExtension(left.getFileName().toString()).toLowerCase();
         var rExt = Differ.getFileExtension(right.getFileName().toString()).toLowerCase();
-        if (lExt == "yml") {
+        if (("yml").equals(lExt)) {
             lExt = "yaml";
         }
-        if (rExt == "yml") {
+        if (("yml").equals(rExt)) {
             rExt = "yaml";
         }
         if (!lExt.equals(rExt)) {

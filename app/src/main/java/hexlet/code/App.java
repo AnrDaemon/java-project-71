@@ -4,7 +4,6 @@ import java.util.concurrent.Callable;
 import org.rootdir.hexlet.java.m2k.DiffFormatJson;
 import org.rootdir.hexlet.java.m2k.DiffFormatPlain;
 import org.rootdir.hexlet.java.m2k.DiffFormatStylish;
-import org.rootdir.hexlet.java.m2k.FileDiffer;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -36,7 +35,7 @@ public class App implements Callable<Integer> {
      */
     @Override
     public final Integer call() throws Exception {
-        var differ = FileDiffer.fromPaths(left, right);
+        var differ = Differ.fromPaths(left, right);
         differ = recursive ? differ.parseRecursive() : differ.parse();
         switch (this.outputFormat) {
             case "plain":

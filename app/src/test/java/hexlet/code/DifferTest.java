@@ -52,7 +52,7 @@ public class DifferTest {
                 " - timeout: 50\n" + //
                 " + timeout: 20\n" + //
                 " + verbose: true\n" + //
-                "}\n";
+                "}";
         assertEquals(expected, diff);
     }
 
@@ -69,7 +69,7 @@ public class DifferTest {
                 " - timeout: 50\n" + //
                 " + timeout: 20\n" + //
                 " + verbose: true\n" + //
-                "}\n";
+                "}";
         assertEquals(expected, diff);
     }
 
@@ -86,7 +86,7 @@ public class DifferTest {
                 " - timeout: 50\n" + //
                 " + timeout: 20\n" + //
                 " + verbose: true\n" + //
-                "}\n";
+                "}";
         assertEquals(expected, diff);
     }
 
@@ -114,7 +114,7 @@ public class DifferTest {
                 " - timeout: 50\n" + //
                 " + timeout: 20\n" + //
                 " + verbose: true\n" + //
-                "}\n";
+                "}";
         assertEquals(expected, diff);
     }
 

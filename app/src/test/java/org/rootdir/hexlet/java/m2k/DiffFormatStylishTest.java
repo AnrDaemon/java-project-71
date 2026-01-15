@@ -14,7 +14,7 @@ public class DiffFormatStylishTest {
         var right = mapper.readTree("{\"added\":\"yes\"}");
         var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatStylish.format(diff);
-        var expected = "{\n + added: yes\n}\n";
+        var expected = "{\n + added: yes\n}";
         assertEquals(expected, result);
     }
 
@@ -25,7 +25,7 @@ public class DiffFormatStylishTest {
         var right = mapper.readTree("{\"updated\":\"yes\"}");
         var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatStylish.format(diff);
-        var expected = "{\n - updated: no\n + updated: yes\n}\n";
+        var expected = "{\n - updated: no\n + updated: yes\n}";
         assertEquals(expected, result);
     }
 
@@ -36,7 +36,7 @@ public class DiffFormatStylishTest {
         var right = mapper.readTree("{}");
         var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatStylish.format(diff);
-        var expected = "{\n - removed: yes\n}\n";
+        var expected = "{\n - removed: yes\n}";
         assertEquals(expected, result);
     }
 
@@ -47,7 +47,7 @@ public class DiffFormatStylishTest {
         var right = mapper.readTree("{}");
         var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatStylish.format(diff);
-        var expected = "{\n - removed: {nested=yes}\n}\n";
+        var expected = "{\n - removed: {nested=yes}\n}";
         assertEquals(expected, result);
     }
 
@@ -58,7 +58,7 @@ public class DiffFormatStylishTest {
         var right = mapper.readTree("{}");
         var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatStylish.format(diff);
-        var expected = "{\n - removed: [1, 2, 5]\n}\n";
+        var expected = "{\n - removed: [1, 2, 5]\n}";
         assertEquals(expected, result);
     }
 }

@@ -59,7 +59,7 @@ public class DiffFormatStylish {
                     break;
             }
         }
-        result.append("}\n");
+        result.append("}");
 
         return result.toString();
     }

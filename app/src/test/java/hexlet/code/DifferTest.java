@@ -1,11 +1,12 @@
-package org.rootdir.hexlet.java.m2k;
+package hexlet.code;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.io.File;
 import org.junit.jupiter.api.Test;
+import org.rootdir.hexlet.java.m2k.NodeStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hexlet.code.Differ;
 
-public class FileDifferTest {
+public class DifferTest {
 
     @Test
     void diffAddedTest() throws Exception {

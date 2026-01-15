@@ -39,6 +39,18 @@ public class DifferTest {
     }
 
     @Test
+    void diffGeneration2PathsTest() throws Exception {
+        var cl = DifferTest.class.getClassLoader();
+        var file1 = new File(cl.getResource("file1-flat.json").getFile()).getAbsolutePath();
+        var file2 = new File(cl.getResource("file2-flat.json").getFile()).getAbsolutePath();
+        var diff = Differ.generate(file2, file1);
+        System.err.println(diff);
+        var expected = "{\n" + " + follow: false\n" + "   host: hexlet.io\n" + " + proxy: 123.234.53.22\n"
+                + " - timeout: 20\n" + " + timeout: 50\n" + " - verbose: true\n" + "}\n";
+        assertEquals(expected, diff);
+    }
+
+    @Test
     void diffGenerationStylishTest() throws Exception {
         var cl = DifferTest.class.getClassLoader();
         var file1 = new File(cl.getResource("file1-flat.json").getFile()).getAbsolutePath();

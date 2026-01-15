@@ -42,6 +42,11 @@ public class Differ {
     }
 
 
+    public static String generate(String path1, String path2) throws Exception {
+        return generate(path1, path2, "stylish");
+    }
+
+
     public static String generate(String path1, String path2, String format) throws Exception {
         var diff = Differ.fromPaths(path1, path2).parse().diff();
         return switch (format) {
@@ -50,6 +55,7 @@ public class Differ {
             default -> DiffFormatStylish.format(diff);
         };
     }
+
 
     public static Differ fromPaths(String left, String right) throws Exception {
         return Differ.fromPaths(Paths.get(left), Paths.get(right));

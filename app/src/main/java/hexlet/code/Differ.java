@@ -8,6 +8,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.rootdir.hexlet.java.m2k.DiffFormatJson;
+import org.rootdir.hexlet.java.m2k.DiffFormatPlain;
+import org.rootdir.hexlet.java.m2k.DiffFormatStylish;
 import org.rootdir.hexlet.java.m2k.NodeStatus;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +41,15 @@ public class Differ {
         return (extPos > 0 && extPos < fileName.length() - 1) ? fileName.substring(extPos + 1) : "";
     }
 
+
+    public static String generate(String path1, String path2, String format) throws Exception {
+        var diff = Differ.fromPaths(path1, path2).parse().diff();
+        return switch (format) {
+            case "json" -> DiffFormatJson.format(diff);
+            case "plain" -> DiffFormatPlain.format(diff);
+            default -> DiffFormatStylish.format(diff);
+        };
+    }
 
     public static Differ fromPaths(String left, String right) throws Exception {
         return Differ.fromPaths(Paths.get(left), Paths.get(right));

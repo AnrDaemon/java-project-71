@@ -14,7 +14,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{\"added\":\"yes\"}");
         var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatPlain.format(diff);
-        var expected = "Property 'added' was added with value: 'yes'\n";
+        var expected = "Property 'added' was added with value: 'yes'";
         assertEquals(expected, result);
     }
 
@@ -25,7 +25,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{\"added\":[]}");
         var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatPlain.format(diff);
-        var expected = "Property 'added' was added with value: [complex value]\n";
+        var expected = "Property 'added' was added with value: [complex value]";
         assertEquals(expected, result);
     }
 
@@ -36,7 +36,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{\"updated\":\"yes\"}");
         var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatPlain.format(diff);
-        var expected = "Property 'updated' was updated. From 'no' to 'yes'\n";
+        var expected = "Property 'updated' was updated. From 'no' to 'yes'";
         assertEquals(expected, result);
     }
 
@@ -47,7 +47,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{\"updated\":true}");
         var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatPlain.format(diff);
-        var expected = "Property 'updated' was updated. From false to true\n";
+        var expected = "Property 'updated' was updated. From false to true";
         assertEquals(expected, result);
     }
 
@@ -58,7 +58,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{\"updated\":123}");
         var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatPlain.format(diff);
-        var expected = "Property 'updated' was updated. From null to 123\n";
+        var expected = "Property 'updated' was updated. From null to 123";
         assertEquals(expected, result);
     }
 
@@ -69,7 +69,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{}");
         var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatPlain.format(diff);
-        var expected = "Property 'removed' was removed\n";
+        var expected = "Property 'removed' was removed";
         assertEquals(expected, result);
     }
 

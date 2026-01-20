@@ -108,5 +108,5 @@ tasks.jacocoTestReport {
 }
 
 tasks.register("install") {
-    dependsOn("installShadowDist")
+    dependsOn("installDist")
 }

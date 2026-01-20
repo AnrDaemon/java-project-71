@@ -45,14 +45,14 @@ public class DifferTest {
         var file1 = new File(cl.getResource("file1-flat.json").getFile()).getAbsolutePath();
         var file2 = new File(cl.getResource("file2-flat.json").getFile()).getAbsolutePath();
         var diff = Differ.generate(file1, file2);
-        var expected = "{\n" + //
-                "  - follow: false\n" + //
-                "    host: hexlet.io\n" + //
-                "  - proxy: 123.234.53.22\n" + //
-                "  - timeout: 50\n" + //
-                "  + timeout: 20\n" + //
-                "  + verbose: true\n" + //
-                "}";
+        var expected = "{\n" //
+                + "  - follow: false\n" //
+                + "    host: hexlet.io\n" //
+                + "  - proxy: 123.234.53.22\n" //
+                + "  - timeout: 50\n" //
+                + "  + timeout: 20\n" //
+                + "  + verbose: true\n" //
+                + "}";
         assertEquals(expected, diff);
     }
 
@@ -62,14 +62,14 @@ public class DifferTest {
         var file1 = new File(cl.getResource("file1-flat.yaml").getFile()).getAbsolutePath();
         var file2 = new File(cl.getResource("file2-flat.yaml").getFile()).getAbsolutePath();
         var diff = Differ.generate(file1, file2);
-        var expected = "{\n" + //
-                "  - follow: false\n" + //
-                "    host: hexlet.io\n" + //
-                "  - proxy: 123.234.53.22\n" + //
-                "  - timeout: 50\n" + //
-                "  + timeout: 20\n" + //
-                "  + verbose: true\n" + //
-                "}";
+        var expected = "{\n" //
+                + "  - follow: false\n" //
+                + "    host: hexlet.io\n" //
+                + "  - proxy: 123.234.53.22\n" //
+                + "  - timeout: 50\n" //
+                + "  + timeout: 20\n" //
+                + "  + verbose: true\n" //
+                + "}";
         assertEquals(expected, diff);
     }
 
@@ -79,14 +79,14 @@ public class DifferTest {
         var file1 = new File(cl.getResource("file1-flat.yml").getFile()).getAbsolutePath();
         var file2 = new File(cl.getResource("file2-flat.yml").getFile()).getAbsolutePath();
         var diff = Differ.generate(file1, file2);
-        var expected = "{\n" + //
-                "  - follow: false\n" + //
-                "    host: hexlet.io\n" + //
-                "  - proxy: 123.234.53.22\n" + //
-                "  - timeout: 50\n" + //
-                "  + timeout: 20\n" + //
-                "  + verbose: true\n" + //
-                "}";
+        var expected = "{\n" //
+                + "  - follow: false\n" //
+                + "    host: hexlet.io\n" //
+                + "  - proxy: 123.234.53.22\n" //
+                + "  - timeout: 50\n" //
+                + "  + timeout: 20\n" //
+                + "  + verbose: true\n" //
+                + "}";
         assertEquals(expected, diff);
     }
 
@@ -107,14 +107,14 @@ public class DifferTest {
         var file1 = new File(cl.getResource("file1-flat.json").getFile()).getAbsolutePath();
         var file2 = new File(cl.getResource("file2-flat.json").getFile()).getAbsolutePath();
         var diff = Differ.generate(file1, file2, "stylish");
-        var expected = "{\n" + //
-                "  - follow: false\n" + //
-                "    host: hexlet.io\n" + //
-                "  - proxy: 123.234.53.22\n" + //
-                "  - timeout: 50\n" + //
-                "  + timeout: 20\n" + //
-                "  + verbose: true\n" + //
-                "}";
+        var expected = "{\n" //
+                + "  - follow: false\n" //
+                + "    host: hexlet.io\n" //
+                + "  - proxy: 123.234.53.22\n" //
+                + "  - timeout: 50\n" //
+                + "  + timeout: 20\n" //
+                + "  + verbose: true\n" //
+                + "}";
         assertEquals(expected, diff);
     }
 
@@ -124,10 +124,10 @@ public class DifferTest {
         var file1 = new File(cl.getResource("file1-flat.json").getFile()).getAbsolutePath();
         var file2 = new File(cl.getResource("file2-flat.json").getFile()).getAbsolutePath();
         var diff = Differ.generate(file1, file2, "plain");
-        var expected = "Property 'follow' was removed\n" + //
-                "Property 'proxy' was removed\n" + //
-                "Property 'timeout' was updated. From 50 to 20\n" + //
-                "Property 'verbose' was added with value: true";
+        var expected = "Property 'follow' was removed\n" //
+                + "Property 'proxy' was removed\n" //
+                + "Property 'timeout' was updated. From 50 to 20\n" //
+                + "Property 'verbose' was added with value: true";
         assertEquals(expected, diff);
     }
 

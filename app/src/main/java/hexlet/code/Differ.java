@@ -75,10 +75,7 @@ public class Differ {
             throw new InvalidParameterException("Compared files must be of the same type");
         }
 
-        var result = new Differ(left, right, switch (lExt) {
-            case "yaml" -> Differ.FORMAT_YAML;
-            default -> Differ.FORMAT_JSON;
-        });
+        var result = new Differ(left, right, ("yaml").equals(lExt) ? Differ.FORMAT_YAML : Differ.FORMAT_JSON);
 
         return result.read();
     }

@@ -126,7 +126,7 @@ public class DifferTest {
         var diff = Differ.generate(file1, file2, "plain");
         var expected = "Property 'follow' was removed\n" + //
                 "Property 'proxy' was removed\n" + //
-                "Property 'timeout' was updated from 50 to 20\n" + //
+                "Property 'timeout' was updated. From 50 to 20\n" + //
                 "Property 'verbose' was added with value: true\n";
         assertEquals(expected, diff);
     }

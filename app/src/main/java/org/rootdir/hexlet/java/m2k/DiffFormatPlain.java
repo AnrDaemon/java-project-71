@@ -16,7 +16,7 @@ public class DiffFormatPlain {
     private static String printUpdated(String key, JsonNode oldNode, JsonNode newNode) {
         var oldValue = formatValue(oldNode);
         var newValue = formatValue(newNode);
-        return line(key, String.format("updated from %s to %s", oldValue, newValue));
+        return line(key, String.format("updated. From %s to %s", oldValue, newValue));
     }
 
     private static String printRemoved(String key) {

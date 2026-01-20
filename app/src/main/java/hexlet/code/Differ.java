@@ -1,4 +1,4 @@
-package org.rootdir.hexlet.java.m2k;
+package hexlet.code;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,13 +8,17 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.rootdir.hexlet.java.m2k.DiffFormatJson;
+import org.rootdir.hexlet.java.m2k.DiffFormatPlain;
+import org.rootdir.hexlet.java.m2k.DiffFormatStylish;
+import org.rootdir.hexlet.java.m2k.NodeStatus;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import lombok.Getter;
 import lombok.val;
 
-public class FileDiffer {
+public class Differ {
 
     public static final String FORMAT_JSON = "JSON";
     public static final String FORMAT_YAML = "YAML";
@@ -38,53 +42,65 @@ public class FileDiffer {
     }
 
 
-    public static FileDiffer fromPaths(String left, String right) throws Exception {
-        return FileDiffer.fromPaths(Paths.get(left), Paths.get(right));
+    public static String generate(String path1, String path2) throws Exception {
+        return generate(path1, path2, "stylish");
     }
 
 
-    public static FileDiffer fromPaths(Path left, Path right) throws Exception {
-        var lExt = FileDiffer.getFileExtension(left.getFileName().toString()).toLowerCase();
-        var rExt = FileDiffer.getFileExtension(right.getFileName().toString()).toLowerCase();
-        if (lExt == "yml") {
+    public static String generate(String path1, String path2, String format) throws Exception {
+        var diff = Differ.fromPaths(path1, path2).parse().diff();
+        return switch (format) {
+            case "json" -> DiffFormatJson.format(diff);
+            case "plain" -> DiffFormatPlain.format(diff);
+            default -> DiffFormatStylish.format(diff);
+        };
+    }
+
+
+    public static Differ fromPaths(String left, String right) throws Exception {
+        return Differ.fromPaths(Paths.get(left), Paths.get(right));
+    }
+
+
+    public static Differ fromPaths(Path left, Path right) throws Exception {
+        var lExt = Differ.getFileExtension(left.getFileName().toString()).toLowerCase();
+        var rExt = Differ.getFileExtension(right.getFileName().toString()).toLowerCase();
+        if (("yml").equals(lExt)) {
             lExt = "yaml";
         }
-        if (rExt == "yml") {
+        if (("yml").equals(rExt)) {
             rExt = "yaml";
         }
         if (!lExt.equals(rExt)) {
             throw new InvalidParameterException("Compared files must be of the same type");
         }
 
-        var result = new FileDiffer(left, right, switch (lExt) {
-            case "yaml" -> FileDiffer.FORMAT_YAML;
-            default -> FileDiffer.FORMAT_JSON;
-        });
+        var result = new Differ(left, right, ("yaml").equals(lExt) ? Differ.FORMAT_YAML : Differ.FORMAT_JSON);
 
         return result.read();
     }
 
 
-    public static FileDiffer fromParsed(JsonNode left, JsonNode right) {
-        var result = new FileDiffer(left, right);
+    public static Differ fromParsed(JsonNode left, JsonNode right) {
+        var result = new Differ(left, right);
 
         return result;
     }
 
 
-    public FileDiffer(Path left, Path right) {
-        this(left, right, FileDiffer.FORMAT_JSON);
+    public Differ(Path left, Path right) {
+        this(left, right, Differ.FORMAT_JSON);
     }
 
 
-    public FileDiffer(Path left, Path right, String fileFormat) {
+    public Differ(Path left, Path right, String fileFormat) {
         this.leftPath = left.toAbsolutePath().normalize();
         this.rightPath = right.toAbsolutePath().normalize();
         this.format = fileFormat;
     }
 
 
-    public FileDiffer(JsonNode left, JsonNode right) {
+    public Differ(JsonNode left, JsonNode right) {
         this.leftRead = left;
         this.rightRead = right;
     }
@@ -95,8 +111,8 @@ public class FileDiffer {
      * @return Object chaining reference.
      * @throws Exception
      */
-    private FileDiffer read() throws Exception {
-        var mapper = FileDiffer.FORMAT_YAML.equals(this.format) ? new YAMLMapper() : new ObjectMapper();
+    private Differ read() throws Exception {
+        var mapper = Differ.FORMAT_YAML.equals(this.format) ? new YAMLMapper() : new ObjectMapper();
         this.leftRead = mapper.readTree(this.leftPath.toFile());
         this.rightRead = mapper.readTree(this.rightPath.toFile());
 
@@ -109,7 +125,7 @@ public class FileDiffer {
      *
      * @return Object chaining reference.
      */
-    public FileDiffer parse() {
+    public Differ parse() {
         this.parsedLeft = flatten(this.leftRead);
         this.parsedRight = flatten(this.rightRead);
 
@@ -122,7 +138,7 @@ public class FileDiffer {
      *
      * @return Object chaining reference.
      */
-    public FileDiffer parseRecursive() {
+    public Differ parseRecursive() {
         this.parsedLeft = flatten(this.leftRead, "$", ".");
         this.parsedRight = flatten(this.rightRead, "$", ".");
 

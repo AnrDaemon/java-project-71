@@ -5,7 +5,7 @@
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/8.8/userguide/building_java_projects.html in the Gradle documentation.
  */
 
-group = "io.hexlet"
+group = "hexlet.code"
 version = "1.0-SNAPSHOT"
 
 java {
@@ -74,7 +74,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("io.hexlet.code.App")
+    mainClass.set("hexlet.code.App")
 }
 
 tasks.named<Test>("test") {
@@ -108,5 +108,5 @@ tasks.jacocoTestReport {
 }
 
 tasks.register("install") {
-    dependsOn("installShadowDist")
+    dependsOn("installDist")
 }

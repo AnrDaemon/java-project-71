@@ -9,7 +9,7 @@ public class DiffFormatStylish {
 
     private static String printf(String c, String key, JsonNode node) {
         var value = formatValue(node);
-        return String.format(" %s %s: %s\n", c, key, value);
+        return String.format("  %s %s: %s\n", c, key, value);
     }
 
     private static String formatValue(JsonNode node) {
@@ -59,7 +59,7 @@ public class DiffFormatStylish {
                     break;
             }
         }
-        result.append("}\n");
+        result.append("}");
 
         return result.toString();
     }

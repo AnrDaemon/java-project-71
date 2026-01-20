@@ -3,6 +3,7 @@ package org.rootdir.hexlet.java.m2k;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hexlet.code.Differ;
 
 public class DiffFormatStylishTest {
 
@@ -11,9 +12,9 @@ public class DiffFormatStylishTest {
         var mapper = new ObjectMapper();
         var left = mapper.readTree("{}");
         var right = mapper.readTree("{\"added\":\"yes\"}");
-        var diff = FileDiffer.fromParsed(left, right).parse().diff();
+        var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatStylish.format(diff);
-        var expected = "{\n + added: yes\n}\n";
+        var expected = "{\n  + added: yes\n}";
         assertEquals(expected, result);
     }
 
@@ -22,9 +23,9 @@ public class DiffFormatStylishTest {
         var mapper = new ObjectMapper();
         var left = mapper.readTree("{\"updated\":\"no\"}");
         var right = mapper.readTree("{\"updated\":\"yes\"}");
-        var diff = FileDiffer.fromParsed(left, right).parse().diff();
+        var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatStylish.format(diff);
-        var expected = "{\n - updated: no\n + updated: yes\n}\n";
+        var expected = "{\n  - updated: no\n  + updated: yes\n}";
         assertEquals(expected, result);
     }
 
@@ -33,9 +34,20 @@ public class DiffFormatStylishTest {
         var mapper = new ObjectMapper();
         var left = mapper.readTree("{\"removed\":\"yes\"}");
         var right = mapper.readTree("{}");
-        var diff = FileDiffer.fromParsed(left, right).parse().diff();
+        var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatStylish.format(diff);
-        var expected = "{\n - removed: yes\n}\n";
+        var expected = "{\n  - removed: yes\n}";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void formatUnchangedTest() throws Exception {
+        var mapper = new ObjectMapper();
+        var left = mapper.readTree("{\"value\":\"unchanged\"}");
+        var right = mapper.readTree("{\"value\":\"unchanged\"}");
+        var diff = Differ.fromParsed(left, right).parse().diff();
+        var result = DiffFormatStylish.format(diff);
+        var expected = "{\n    value: unchanged\n}";
         assertEquals(expected, result);
     }
 
@@ -44,9 +56,9 @@ public class DiffFormatStylishTest {
         var mapper = new ObjectMapper();
         var left = mapper.readTree("{\"removed\":{\"nested\":\"yes\"}}");
         var right = mapper.readTree("{}");
-        var diff = FileDiffer.fromParsed(left, right).parse().diff();
+        var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatStylish.format(diff);
-        var expected = "{\n - removed: {nested=yes}\n}\n";
+        var expected = "{\n  - removed: {nested=yes}\n}";
         assertEquals(expected, result);
     }
 
@@ -55,9 +67,9 @@ public class DiffFormatStylishTest {
         var mapper = new ObjectMapper();
         var left = mapper.readTree("{\"removed\": [1,2,5]}");
         var right = mapper.readTree("{}");
-        var diff = FileDiffer.fromParsed(left, right).parse().diff();
+        var diff = Differ.fromParsed(left, right).parse().diff();
         var result = DiffFormatStylish.format(diff);
-        var expected = "{\n - removed: [1, 2, 5]\n}\n";
+        var expected = "{\n  - removed: [1, 2, 5]\n}";
         assertEquals(expected, result);
     }
 }

@@ -50,6 +50,8 @@ public class App implements Callable<Integer> {
                 System.out.print(DiffFormatStylish.format(differ.diff()));
                 break;
         }
+
+        System.out.print("\n");
         return 0;
     }
 
@@ -62,6 +64,7 @@ public class App implements Callable<Integer> {
         try {
             exitCode = new CommandLine(new App()).execute(args);
         } catch (Exception e) {
+            e.printStackTrace();
             exitCode = 1;
         }
 

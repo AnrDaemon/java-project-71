@@ -1,13 +1,17 @@
 package hexlet.code;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import java.io.File;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.rootdir.hexlet.java.m2k.NodeStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class DifferTest {
+public class DifferTest extends FileReadingTest {
 
     @Test
     void diffAddedTest() throws Exception {
@@ -40,110 +44,80 @@ public class DifferTest {
     }
 
     @Test
+    void diffCreation2ParamsTest() throws Exception {
+        var file1 = getResourceFile("file1-flat.json").toPath();
+        var file2 = getResourceFile("file2-flat.json").toPath();
+        var differ = new Differ(file1, file2);
+        assertInstanceOf(Differ.class, differ);
+    }
+
+    @Test
+    void diffParseRecursiveTest() throws Exception {
+        var file1 = getResourceFile("file1-flat.json").toPath();
+        var file2 = getResourceFile("file2-flat.json").toPath();
+        var differ = Differ.fromPaths(file1, file2).parseRecursive();
+        assertInstanceOf(Differ.class, differ);
+    }
+
+    @Test
     void diffGeneration2PathsTest() throws Exception {
-        var cl = DifferTest.class.getClassLoader();
-        var file1 = new File(cl.getResource("file1-flat.json").getFile()).getAbsolutePath();
-        var file2 = new File(cl.getResource("file2-flat.json").getFile()).getAbsolutePath();
+        var file1 = getResourceFile("file1-flat.json").getAbsolutePath();
+        var file2 = getResourceFile("file2-flat.json").getAbsolutePath();
         var diff = Differ.generate(file1, file2);
-        var expected = "{\n" //
-                + "  - follow: false\n" //
-                + "    host: hexlet.io\n" //
-                + "  - proxy: 123.234.53.22\n" //
-                + "  - timeout: 50\n" //
-                + "  + timeout: 20\n" //
-                + "  + verbose: true\n" //
-                + "}";
+        var expected = readFixture("expected-flat.stylish.txt");
         assertEquals(expected, diff);
     }
 
     @Test
     void diffGeneration2PathsYamlTest() throws Exception {
-        var cl = DifferTest.class.getClassLoader();
-        var file1 = new File(cl.getResource("file1-flat.yaml").getFile()).getAbsolutePath();
-        var file2 = new File(cl.getResource("file2-flat.yaml").getFile()).getAbsolutePath();
+        var file1 = getResourceFile("file1-flat.yaml").getAbsolutePath();
+        var file2 = getResourceFile("file2-flat.yaml").getAbsolutePath();
         var diff = Differ.generate(file1, file2);
-        var expected = "{\n" //
-                + "  - follow: false\n" //
-                + "    host: hexlet.io\n" //
-                + "  - proxy: 123.234.53.22\n" //
-                + "  - timeout: 50\n" //
-                + "  + timeout: 20\n" //
-                + "  + verbose: true\n" //
-                + "}";
+        var expected = readFixture("expected-flat.stylish.txt");
         assertEquals(expected, diff);
     }
 
     @Test
     void diffGeneration2PathsYmlTest() throws Exception {
-        var cl = DifferTest.class.getClassLoader();
-        var file1 = new File(cl.getResource("file1-flat.yml").getFile()).getAbsolutePath();
-        var file2 = new File(cl.getResource("file2-flat.yml").getFile()).getAbsolutePath();
+        var file1 = getResourceFile("file1-flat.yml").getAbsolutePath();
+        var file2 = getResourceFile("file2-flat.yml").getAbsolutePath();
         var diff = Differ.generate(file1, file2);
-        var expected = "{\n" //
-                + "  - follow: false\n" //
-                + "    host: hexlet.io\n" //
-                + "  - proxy: 123.234.53.22\n" //
-                + "  - timeout: 50\n" //
-                + "  + timeout: 20\n" //
-                + "  + verbose: true\n" //
-                + "}";
+        var expected = readFixture("expected-flat.stylish.txt");
         assertEquals(expected, diff);
     }
 
     @Test
     void diffGenerationFormatMismatchTest() {
-        var cl = DifferTest.class.getClassLoader();
-        var file1 = new File(cl.getResource("file1-flat.json").getFile()).getAbsolutePath();
-        var file2 = new File(cl.getResource("file2-flat.yaml").getFile()).getAbsolutePath();
+        var file1 = getResourceFile("file1-flat.json").getAbsolutePath();
+        var file2 = getResourceFile("file2-flat.yaml").getAbsolutePath();
 
         assertThrows(Exception.class, () -> {
             Differ.generate(file1, file2);
         });
     }
 
-    @Test
-    void diffGenerationStylishTest() throws Exception {
-        var cl = DifferTest.class.getClassLoader();
-        var file1 = new File(cl.getResource("file1-flat.json").getFile()).getAbsolutePath();
-        var file2 = new File(cl.getResource("file2-flat.json").getFile()).getAbsolutePath();
-        var diff = Differ.generate(file1, file2, "stylish");
-        var expected = "{\n" //
-                + "  - follow: false\n" //
-                + "    host: hexlet.io\n" //
-                + "  - proxy: 123.234.53.22\n" //
-                + "  - timeout: 50\n" //
-                + "  + timeout: 20\n" //
-                + "  + verbose: true\n" //
-                + "}";
-        assertEquals(expected, diff);
+    static Stream<Arguments> diffGenerationFormatSource() {
+        return Stream.of(Arguments.of("file1-flat.json", "file2-flat.json", "stylish", "expected-flat.stylish.txt"), //
+                Arguments.of("file1-flat.json", "file2-flat.json", "plain", "expected-flat.plain.txt"), //
+                Arguments.of("file1-flat.json", "file2-flat.json", "json", "expected-flat.json.txt") //
+        );
     }
 
-    @Test
-    void diffGenerationPlainTest() throws Exception {
-        var cl = DifferTest.class.getClassLoader();
-        var file1 = new File(cl.getResource("file1-flat.json").getFile()).getAbsolutePath();
-        var file2 = new File(cl.getResource("file2-flat.json").getFile()).getAbsolutePath();
-        var diff = Differ.generate(file1, file2, "plain");
-        var expected = "Property 'follow' was removed\n" //
-                + "Property 'proxy' was removed\n" //
-                + "Property 'timeout' was updated. From 50 to 20\n" //
-                + "Property 'verbose' was added with value: true";
-        assertEquals(expected, diff);
-    }
-
-    @Test
-    void diffGenerationJsonTest() throws Exception {
-        var cl = DifferTest.class.getClassLoader();
-        var file1 = new File(cl.getResource("file1-flat.json").getFile()).getAbsolutePath();
-        var file2 = new File(cl.getResource("file2-flat.json").getFile()).getAbsolutePath();
-        var diff = Differ.generate(file1, file2, "json");
-        var expected = "{\n" + "  \"follow\" : {\n" + "    \"changeType\" : \"removed\",\n"
-                + "    \"oldValue\" : false\n" + "  },\n" + "  \"host\" : {\n" + "    \"changeType\" : \"unchanged\",\n"
-                + "    \"oldValue\" : \"hexlet.io\"\n" + "  },\n" + "  \"proxy\" : {\n"
-                + "    \"changeType\" : \"removed\",\n" + "    \"oldValue\" : \"123.234.53.22\"\n" + "  },\n"
-                + "  \"timeout\" : {\n" + "    \"changeType\" : \"updated\",\n" + "    \"oldValue\" : 50,\n"
-                + "    \"newValue\" : 20\n" + "  },\n" + "  \"verbose\" : {\n" + "    \"changeType\" : \"added\",\n"
-                + "    \"newValue\" : true\n" + "  }\n" + "}";
+    /**
+     * Test different output formats.
+     *
+     * @param path1 Left file path.
+     * @param path2 Right file path.
+     * @param format Output format.
+     * @param fixture Fixture file name.
+     */
+    @ParameterizedTest
+    @MethodSource("diffGenerationFormatSource")
+    void diffGenerationFormattedTest(String path1, String path2, String format, String fixture) throws Exception {
+        var file1 = getResourceFile(path1).getAbsolutePath();
+        var file2 = getResourceFile(path2).getAbsolutePath();
+        var diff = Differ.generate(file1, file2, format);
+        var expected = readFixture(fixture);
         assertEquals(expected, diff);
     }
 }

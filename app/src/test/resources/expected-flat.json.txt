@@ -1,0 +1,23 @@
+{
+  "follow" : {
+    "changeType" : "removed",
+    "oldValue" : false
+  },
+  "host" : {
+    "changeType" : "unchanged",
+    "oldValue" : "hexlet.io"
+  },
+  "proxy" : {
+    "changeType" : "removed",
+    "oldValue" : "123.234.53.22"
+  },
+  "timeout" : {
+    "changeType" : "updated",
+    "oldValue" : 50,
+    "newValue" : 20
+  },
+  "verbose" : {
+    "changeType" : "added",
+    "newValue" : true
+  }
+}

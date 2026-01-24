@@ -3,13 +3,51 @@
  */
 package hexlet.code;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import picocli.CommandLine;
 
-class AppTest {
+class AppTest extends FileReadingTest {
     @Test
     void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+        var app = new App();
+        assertNotNull(app.getGreeting(), "app should have a greeting");
+    }
+
+    @Test
+    void appExitsWithSuccess2Params() {
+        var app = new App();
+        var command = new CommandLine(app);
+        var exitCode = command.execute(getResourceFile("file1-flat.json").toString(),
+                getResourceFile("file2-flat.json").toString());
+        assertTrue(exitCode == 0);
+    }
+
+    @Test
+    void appExitsWithSuccessFormatPlain() {
+        var app = new App();
+        var command = new CommandLine(app);
+        var exitCode = command.execute("-f", "plain", getResourceFile("file1-flat.json").toString(),
+                getResourceFile("file2-flat.json").toString());
+        assertTrue(exitCode == 0);
+    }
+
+    @Test
+    void appExitsWithSuccessFormatJson() {
+        var app = new App();
+        var command = new CommandLine(app);
+        var exitCode = command.execute("-f", "json", getResourceFile("file1-flat.json").toString(),
+                getResourceFile("file2-flat.json").toString());
+        assertTrue(exitCode == 0);
+    }
+
+    @Test
+    void appExitsWithSuccessRecursive() {
+        var app = new App();
+        var command = new CommandLine(app);
+        var exitCode = command.execute("-R", getResourceFile("file1-flat.json").toString(),
+                getResourceFile("file2-flat.json").toString());
+        assertTrue(exitCode == 0);
     }
 }

@@ -64,7 +64,7 @@ public class App implements Callable<Integer> {
         try {
             exitCode = new CommandLine(new App()).execute(args);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(String.format("Failure: %s", e.getMessage()));
             exitCode = 1;
         }
 

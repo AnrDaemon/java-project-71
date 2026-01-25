@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public interface SourceFileReader {
 
-    final String FORMAT_JSON = "JSON";
-    final String FORMAT_YAML = "YAML";
+    String FORMAT_JSON = "JSON";
+    String FORMAT_YAML = "YAML";
 
     JsonNode read(Path path) throws IOException;
 

@@ -5,6 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public interface TreeParserInterface {
 
-    public Map<String, JsonNode> parse(JsonNode tree);
+    Map<String, JsonNode> parse(JsonNode tree);
 
 }

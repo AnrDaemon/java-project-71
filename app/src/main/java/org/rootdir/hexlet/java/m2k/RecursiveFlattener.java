@@ -7,6 +7,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public class RecursiveFlattener implements TreeParserInterface {
 
+    /**
+     * Flattens the tree.
+     *
+     * @param tree Node tree.
+     * @return Flat map of the tree.
+     */
     @Override
     public Map<String, JsonNode> parse(JsonNode tree) {
         return flatten(tree, "$", ".");

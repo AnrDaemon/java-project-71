@@ -8,6 +8,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonFileReader implements SourceFileReader {
 
+    /**
+     * Read the path to a node tree.
+     *
+     * @param path Source path.
+     * @return Parsed tree.
+     */
     @Override
     public JsonNode read(Path path) throws IOException {
         var mapper = new ObjectMapper();

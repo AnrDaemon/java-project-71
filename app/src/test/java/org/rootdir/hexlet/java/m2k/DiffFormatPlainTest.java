@@ -3,7 +3,6 @@ package org.rootdir.hexlet.java.m2k;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hexlet.code.Differ;
 
 public class DiffFormatPlainTest {
 

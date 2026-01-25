@@ -8,6 +8,12 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 public class YamlFileReader implements SourceFileReader {
 
+    /**
+     * Read the path to a node tree.
+     *
+     * @param path Source path.
+     * @return Parsed tree.
+     */
     @Override
     public JsonNode read(Path path) throws IOException {
         var mapper = new YAMLMapper();

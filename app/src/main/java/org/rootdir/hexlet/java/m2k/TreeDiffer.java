@@ -11,6 +11,8 @@ public class TreeDiffer {
     /**
      * Compare nodes and build the list of changes.
      *
+     * @param parsedLeft Left compared side.
+     * @param parsedRight Right compared side.
      * @return The list of changes.
      */
     public static List<NodeStatus> diff(Map<String, JsonNode> parsedLeft, Map<String, JsonNode> parsedRight) {

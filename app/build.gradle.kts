@@ -15,7 +15,6 @@ java {
 }
 
 plugins {
-    id("java")
     id("application")
     id("checkstyle")
     id("jvm-test-suite")

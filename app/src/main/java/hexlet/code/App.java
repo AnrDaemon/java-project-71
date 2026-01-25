@@ -1,9 +1,6 @@
 package hexlet.code;
 
 import java.util.concurrent.Callable;
-import org.rootdir.hexlet.java.m2k.DiffFormatJson;
-import org.rootdir.hexlet.java.m2k.DiffFormatPlain;
-import org.rootdir.hexlet.java.m2k.DiffFormatStylish;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -35,23 +32,8 @@ public class App implements Callable<Integer> {
      */
     @Override
     public final Integer call() throws Exception {
-        var differ = Differ.fromPaths(left, right);
-        differ = recursive ? differ.parseRecursive() : differ.parse();
-        switch (this.outputFormat) {
-            case "plain":
-                System.out.print(DiffFormatPlain.format(differ.diff()));
-                break;
-
-            case "json":
-                System.out.print(DiffFormatJson.format(differ.diff()));
-                break;
-
-            default:
-                System.out.print(DiffFormatStylish.format(differ.diff()));
-                break;
-        }
-
-        System.out.print("\n");
+        var diff = Differ.generate(left, right, outputFormat, recursive);
+        System.out.print(diff + "\n");
         return 0;
     }
 

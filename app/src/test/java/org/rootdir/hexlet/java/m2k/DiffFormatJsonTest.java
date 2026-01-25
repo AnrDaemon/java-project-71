@@ -12,7 +12,8 @@ public class DiffFormatJsonTest {
         var mapper = new ObjectMapper();
         var left = mapper.readTree("{}");
         var right = mapper.readTree("{\"added\":\"yes\"}");
-        var diff = Differ.fromParsed(left, right).parse().diff();
+        var parser = new NonRecursiveFlattener();
+        var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
         var result = DiffFormatJson.format(diff);
         var expected = "{\n  \"added\" : {\n    \"changeType\" : \"added\",\n    \"newValue\" : \"yes\"\n  }\n}";
         assertEquals(expected, result);
@@ -23,7 +24,8 @@ public class DiffFormatJsonTest {
         var mapper = new ObjectMapper();
         var left = mapper.readTree("{\"updated\":\"no\"}");
         var right = mapper.readTree("{\"updated\":\"yes\"}");
-        var diff = Differ.fromParsed(left, right).parse().diff();
+        var parser = new NonRecursiveFlattener();
+        var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
         var result = DiffFormatJson.format(diff);
         var expected = "{\n  \"updated\" : {\n    \"changeType\" : \"updated\",\n"
                 + "    \"oldValue\" : \"no\",\n    \"newValue\" : \"yes\"\n  }\n}";
@@ -35,7 +37,8 @@ public class DiffFormatJsonTest {
         var mapper = new ObjectMapper();
         var left = mapper.readTree("{\"removed\":\"yes\"}");
         var right = mapper.readTree("{}");
-        var diff = Differ.fromParsed(left, right).parse().diff();
+        var parser = new NonRecursiveFlattener();
+        var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
         var result = DiffFormatJson.format(diff);
         var expected =
                 "{\n  \"removed\" : {\n    \"changeType\" : \"removed\",\n" + "    \"oldValue\" : \"yes\"\n  }\n}";
@@ -47,7 +50,8 @@ public class DiffFormatJsonTest {
         var mapper = new ObjectMapper();
         var left = mapper.readTree("{\"unchanged\":\"yes\"}");
         var right = mapper.readTree("{\"unchanged\":\"yes\"}");
-        var diff = Differ.fromParsed(left, right).parse().diff();
+        var parser = new NonRecursiveFlattener();
+        var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
         var result = DiffFormatJson.format(diff);
         var expected =
                 "{\n  \"unchanged\" : {\n    \"changeType\" : \"unchanged\",\n" + "    \"oldValue\" : \"yes\"\n  }\n}";

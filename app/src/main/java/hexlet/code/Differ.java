@@ -1,23 +1,17 @@
 package hexlet.code;
 
 import java.nio.file.Paths;
-import org.rootdir.hexlet.java.m2k.DiffFormatJson;
-import org.rootdir.hexlet.java.m2k.DiffFormatPlain;
-import org.rootdir.hexlet.java.m2k.DiffFormatStylish;
 import org.rootdir.hexlet.java.m2k.filediffer.NonRecursiveFlattener;
 import org.rootdir.hexlet.java.m2k.filediffer.RecursiveFlattener;
 import org.rootdir.hexlet.java.m2k.filediffer.TreeDiffer;
+import org.rootdir.hexlet.java.m2k.filediffer.formatter.FormatterSelector;
 import org.rootdir.hexlet.java.m2k.filereader.SourceFileReader;
 
 public class Differ {
 
-    public static final String FORMAT_STYLISH = "stylish";
-    public static final String FORMAT_PLAIN = "plain";
-    public static final String FORMAT_JSON = "json";
-
 
     public static String generate(String path1, String path2) throws Exception {
-        return generate(path1, path2, FORMAT_STYLISH);
+        return generate(path1, path2, FormatterSelector.STYLISH);
     }
 
 
@@ -35,11 +29,7 @@ public class Differ {
         var rightParsed = parser.parse(right.read());
 
         var diff = TreeDiffer.diff(leftParsed, rightParsed);
-        return switch (format) {
-            case FORMAT_JSON -> DiffFormatJson.format(diff);
-            case FORMAT_PLAIN -> DiffFormatPlain.format(diff);
-            default -> DiffFormatStylish.format(diff);
-        };
+        return FormatterSelector.select(format).format(diff);
     }
 
 }

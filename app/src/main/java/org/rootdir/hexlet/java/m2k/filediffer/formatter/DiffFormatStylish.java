@@ -1,12 +1,14 @@
-package org.rootdir.hexlet.java.m2k;
+package org.rootdir.hexlet.java.m2k.filediffer.formatter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.rootdir.hexlet.java.m2k.filediffer.NodeStatus;
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.NoArgsConstructor;
 
-public class DiffFormatStylish {
+@NoArgsConstructor
+public class DiffFormatStylish implements FormatterInterface {
 
     private static String printf(String c, String key, JsonNode node) {
         var value = formatValue(node);
@@ -21,7 +23,7 @@ public class DiffFormatStylish {
         var result = new StringBuilder();
 
         if (!node.isContainerNode()) {
-            throw new IllegalArgumentException("Given value is not a valid rederable node");
+            throw new IllegalArgumentException("Given value is not a valid renderable node");
         }
 
         result.append(node.isArray() ? "[" : "{");
@@ -37,7 +39,7 @@ public class DiffFormatStylish {
         return result.append(node.isArray() ? "]" : "}").toString();
     }
 
-    public static String format(List<NodeStatus> diff) {
+    public String format(List<NodeStatus> diff) {
         var result = new StringBuilder();
         result.append("{\n");
         for (var e : diff) {

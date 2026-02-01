@@ -1,4 +1,4 @@
-package org.rootdir.hexlet.java.m2k;
+package org.rootdir.hexlet.java.m2k.filediffer.formatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class DiffFormatJsonTest {
         var right = mapper.readTree("{\"added\":\"yes\"}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatJson.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.JSON).format(diff);
         var expected = "{\n  \"added\" : {\n    \"changeType\" : \"added\",\n    \"newValue\" : \"yes\"\n  }\n}";
         assertEquals(expected, result);
     }
@@ -27,7 +27,7 @@ public class DiffFormatJsonTest {
         var right = mapper.readTree("{\"updated\":\"yes\"}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatJson.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.JSON).format(diff);
         var expected = "{\n  \"updated\" : {\n    \"changeType\" : \"updated\",\n"
                 + "    \"oldValue\" : \"no\",\n    \"newValue\" : \"yes\"\n  }\n}";
         assertEquals(expected, result);
@@ -40,7 +40,7 @@ public class DiffFormatJsonTest {
         var right = mapper.readTree("{}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatJson.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.JSON).format(diff);
         var expected =
                 "{\n  \"removed\" : {\n    \"changeType\" : \"removed\",\n" + "    \"oldValue\" : \"yes\"\n  }\n}";
         assertEquals(expected, result);
@@ -53,7 +53,7 @@ public class DiffFormatJsonTest {
         var right = mapper.readTree("{\"unchanged\":\"yes\"}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatJson.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.JSON).format(diff);
         var expected =
                 "{\n  \"unchanged\" : {\n    \"changeType\" : \"unchanged\",\n" + "    \"oldValue\" : \"yes\"\n  }\n}";
         assertEquals(expected, result);

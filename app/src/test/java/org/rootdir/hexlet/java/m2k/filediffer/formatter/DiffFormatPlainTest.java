@@ -1,4 +1,4 @@
-package org.rootdir.hexlet.java.m2k;
+package org.rootdir.hexlet.java.m2k.filediffer.formatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{\"added\":\"yes\"}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatPlain.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
         var expected = "Property 'added' was added with value: 'yes'";
         assertEquals(expected, result);
     }
@@ -27,7 +27,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{\"added\":[]}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatPlain.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
         var expected = "Property 'added' was added with value: [complex value]";
         assertEquals(expected, result);
     }
@@ -39,7 +39,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{\"updated\":\"yes\"}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatPlain.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
         var expected = "Property 'updated' was updated. From 'no' to 'yes'";
         assertEquals(expected, result);
     }
@@ -51,7 +51,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{\"updated\":true}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatPlain.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
         var expected = "Property 'updated' was updated. From false to true";
         assertEquals(expected, result);
     }
@@ -63,7 +63,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{\"updated\":123}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatPlain.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
         var expected = "Property 'updated' was updated. From null to 123";
         assertEquals(expected, result);
     }
@@ -75,7 +75,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatPlain.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
         var expected = "Property 'removed' was removed";
         assertEquals(expected, result);
     }
@@ -87,7 +87,7 @@ public class DiffFormatPlainTest {
         var right = mapper.readTree("{\"unchanged\":\"yes\"}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatPlain.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
         var expected = "";
         assertEquals(expected, result);
     }

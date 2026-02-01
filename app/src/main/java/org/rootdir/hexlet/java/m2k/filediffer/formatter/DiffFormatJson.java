@@ -1,4 +1,4 @@
-package org.rootdir.hexlet.java.m2k;
+package org.rootdir.hexlet.java.m2k.filediffer.formatter;
 
 import java.util.List;
 import org.rootdir.hexlet.java.m2k.filediffer.NodeStatus;
@@ -8,10 +8,13 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import lombok.NoArgsConstructor;
 
-public class DiffFormatJson {
+@NoArgsConstructor
+public class DiffFormatJson implements FormatterInterface {
 
-    public static String format(List<NodeStatus> diff) {
+
+    public String format(List<NodeStatus> diff) {
         var mapper = new ObjectMapper();
         var result = mapper.createObjectNode();
         for (var e : diff) {

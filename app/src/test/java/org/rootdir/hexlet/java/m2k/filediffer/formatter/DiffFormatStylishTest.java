@@ -1,4 +1,4 @@
-package org.rootdir.hexlet.java.m2k;
+package org.rootdir.hexlet.java.m2k.filediffer.formatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class DiffFormatStylishTest {
         var right = mapper.readTree("{\"added\":\"yes\"}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatStylish.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.STYLISH).format(diff);
         var expected = "{\n  + added: yes\n}";
         assertEquals(expected, result);
     }
@@ -27,7 +27,7 @@ public class DiffFormatStylishTest {
         var right = mapper.readTree("{\"updated\":\"yes\"}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatStylish.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.STYLISH).format(diff);
         var expected = "{\n  - updated: no\n  + updated: yes\n}";
         assertEquals(expected, result);
     }
@@ -39,7 +39,7 @@ public class DiffFormatStylishTest {
         var right = mapper.readTree("{}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatStylish.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.STYLISH).format(diff);
         var expected = "{\n  - removed: yes\n}";
         assertEquals(expected, result);
     }
@@ -51,7 +51,7 @@ public class DiffFormatStylishTest {
         var right = mapper.readTree("{\"value\":\"unchanged\"}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatStylish.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.STYLISH).format(diff);
         var expected = "{\n    value: unchanged\n}";
         assertEquals(expected, result);
     }
@@ -63,7 +63,7 @@ public class DiffFormatStylishTest {
         var right = mapper.readTree("{}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatStylish.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.STYLISH).format(diff);
         var expected = "{\n  - removed: {nested=yes}\n}";
         assertEquals(expected, result);
     }
@@ -75,7 +75,7 @@ public class DiffFormatStylishTest {
         var right = mapper.readTree("{}");
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = DiffFormatStylish.format(diff);
+        var result = FormatterSelector.select(FormatterSelector.STYLISH).format(diff);
         var expected = "{\n  - removed: [1, 2, 5]\n}";
         assertEquals(expected, result);
     }

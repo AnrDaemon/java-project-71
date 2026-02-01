@@ -1,0 +1,8 @@
+{
+  "added": "yes",
+  "addedComplex": [],
+  "updated":  "yes",
+  "updatedBoolean":  true,
+  "updatedNullToNumeric": 123,
+  "unchanged": "yes"
+}

@@ -5,90 +5,22 @@ import org.junit.jupiter.api.Test;
 import org.rootdir.hexlet.java.m2k.filediffer.NonRecursiveFlattener;
 import org.rootdir.hexlet.java.m2k.filediffer.TreeDiffer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hexlet.code.FileReadingTest;
 
-public class DiffFormatPlainTest {
+public class DiffFormatPlainTest extends FileReadingTest {
 
     @Test
-    void formatAddedStringValueTest() throws Exception {
+    void formatTest() throws Exception {
+        var file1 = getResourceFile("file1-basic.json");
+        var file2 = getResourceFile("file2-basic.json");
         var mapper = new ObjectMapper();
-        var left = mapper.readTree("{}");
-        var right = mapper.readTree("{\"added\":\"yes\"}");
+        var left = mapper.readTree(file1);
+        var right = mapper.readTree(file2);
         var parser = new NonRecursiveFlattener();
         var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
         var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
-        var expected = "Property 'added' was added with value: 'yes'";
+        var expected = readFixture("expected-basic.plain.txt");
         assertEquals(expected, result);
     }
 
-    @Test
-    void formatAddedComplexValueTest() throws Exception {
-        var mapper = new ObjectMapper();
-        var left = mapper.readTree("{}");
-        var right = mapper.readTree("{\"added\":[]}");
-        var parser = new NonRecursiveFlattener();
-        var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
-        var expected = "Property 'added' was added with value: [complex value]";
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void formatUpdatedStringValueTest() throws Exception {
-        var mapper = new ObjectMapper();
-        var left = mapper.readTree("{\"updated\":\"no\"}");
-        var right = mapper.readTree("{\"updated\":\"yes\"}");
-        var parser = new NonRecursiveFlattener();
-        var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
-        var expected = "Property 'updated' was updated. From 'no' to 'yes'";
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void formatUpdatedBooleanValueTest() throws Exception {
-        var mapper = new ObjectMapper();
-        var left = mapper.readTree("{\"updated\":false}");
-        var right = mapper.readTree("{\"updated\":true}");
-        var parser = new NonRecursiveFlattener();
-        var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
-        var expected = "Property 'updated' was updated. From false to true";
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void formatUpdatedNullToNumericValueTest() throws Exception {
-        var mapper = new ObjectMapper();
-        var left = mapper.readTree("{\"updated\":null}");
-        var right = mapper.readTree("{\"updated\":123}");
-        var parser = new NonRecursiveFlattener();
-        var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
-        var expected = "Property 'updated' was updated. From null to 123";
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void formatRemovedValueTest() throws Exception {
-        var mapper = new ObjectMapper();
-        var left = mapper.readTree("{\"removed\":\"yes\"}");
-        var right = mapper.readTree("{}");
-        var parser = new NonRecursiveFlattener();
-        var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
-        var expected = "Property 'removed' was removed";
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void formatUnchangedValueTest() throws Exception {
-        var mapper = new ObjectMapper();
-        var left = mapper.readTree("{\"unchanged\":\"yes\"}");
-        var right = mapper.readTree("{\"unchanged\":\"yes\"}");
-        var parser = new NonRecursiveFlattener();
-        var diff = TreeDiffer.diff(parser.parse(left), parser.parse(right));
-        var result = FormatterSelector.select(FormatterSelector.PLAIN).format(diff);
-        var expected = "";
-        assertEquals(expected, result);
-    }
 }

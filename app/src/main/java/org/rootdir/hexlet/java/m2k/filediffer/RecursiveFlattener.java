@@ -1,12 +1,11 @@
-package org.rootdir.hexlet.java.m2k;
+package org.rootdir.hexlet.java.m2k.filediffer;
 
 import java.util.HashMap;
 import java.util.Map;
 import org.rootdir.hexlet.java.m2k.interfaces.TreeParserInterface;
 import com.fasterxml.jackson.databind.JsonNode;
-import lombok.val;
 
-public class NonRecursiveFlattener implements TreeParserInterface {
+public class RecursiveFlattener implements TreeParserInterface {
 
     /**
      * Flattens the tree.
@@ -16,24 +15,26 @@ public class NonRecursiveFlattener implements TreeParserInterface {
      */
     @Override
     public Map<String, JsonNode> parse(JsonNode tree) {
-        return flatten(tree);
+        return flatten(tree, "$", ".");
     }
 
     /**
-     * Converts the structure to a path-node pairs map.
+     * Flattens the structure to a path-node pairs map.
      *
-     * This is a flat version of the full function.
+     * This is a recursive version of a function.
      *
      * @param obj The list of nodes (list root node).
-     * @return A map of node paths and values.
+     * @param path The list (root node) path name. Supply "$" to get traditional JSON notation of the
+     *        full paths (like, `$.path.other.etc`).
+     * @param sep Path names separator.
+     * @return A map of full node paths and values.
      */
-    public static Map<String, JsonNode> flatten(JsonNode obj) {
-        val path = "";
+    public static Map<String, JsonNode> flatten(JsonNode obj, String path, String sep) {
         var result = new HashMap<String, JsonNode>();
 
         if (obj.isObject()) {
             for (var o : obj.properties()) {
-                result.put(o.getKey(), o.getValue());
+                result.putAll(flatten(o.getValue(), path + sep + o.getKey(), sep));
             }
         } else {
             result.put(path, obj);

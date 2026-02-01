@@ -3,6 +3,7 @@ package org.rootdir.hexlet.java.m2k;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.rootdir.hexlet.java.m2k.filediffer.NodeStatus;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class DiffFormatStylish {

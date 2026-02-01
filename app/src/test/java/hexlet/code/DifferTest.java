@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.rootdir.hexlet.java.m2k.NodeStatus;
-import org.rootdir.hexlet.java.m2k.NonRecursiveFlattener;
-import org.rootdir.hexlet.java.m2k.TreeDiffer;
+import org.rootdir.hexlet.java.m2k.filediffer.NodeStatus;
+import org.rootdir.hexlet.java.m2k.filediffer.NonRecursiveFlattener;
+import org.rootdir.hexlet.java.m2k.filediffer.TreeDiffer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DifferTest extends FileReadingTest {

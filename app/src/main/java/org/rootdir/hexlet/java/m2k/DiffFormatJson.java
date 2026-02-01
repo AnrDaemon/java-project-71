@@ -1,6 +1,7 @@
 package org.rootdir.hexlet.java.m2k;
 
 import java.util.List;
+import org.rootdir.hexlet.java.m2k.filediffer.NodeStatus;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;

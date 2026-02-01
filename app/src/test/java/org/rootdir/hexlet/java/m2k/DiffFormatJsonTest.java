@@ -2,6 +2,8 @@ package org.rootdir.hexlet.java.m2k;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
+import org.rootdir.hexlet.java.m2k.filediffer.NonRecursiveFlattener;
+import org.rootdir.hexlet.java.m2k.filediffer.TreeDiffer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DiffFormatJsonTest {

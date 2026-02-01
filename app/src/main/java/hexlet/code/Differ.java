@@ -4,9 +4,9 @@ import java.nio.file.Paths;
 import org.rootdir.hexlet.java.m2k.DiffFormatJson;
 import org.rootdir.hexlet.java.m2k.DiffFormatPlain;
 import org.rootdir.hexlet.java.m2k.DiffFormatStylish;
-import org.rootdir.hexlet.java.m2k.NonRecursiveFlattener;
-import org.rootdir.hexlet.java.m2k.RecursiveFlattener;
-import org.rootdir.hexlet.java.m2k.TreeDiffer;
+import org.rootdir.hexlet.java.m2k.filediffer.NonRecursiveFlattener;
+import org.rootdir.hexlet.java.m2k.filediffer.RecursiveFlattener;
+import org.rootdir.hexlet.java.m2k.filediffer.TreeDiffer;
 import org.rootdir.hexlet.java.m2k.filereader.SourceFileReader;
 
 public class Differ {

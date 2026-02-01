@@ -2,6 +2,7 @@ package org.rootdir.hexlet.java.m2k;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.rootdir.hexlet.java.m2k.filediffer.NodeStatus;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class DiffFormatPlain {

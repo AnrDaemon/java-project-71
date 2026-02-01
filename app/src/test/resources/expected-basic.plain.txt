@@ -1,0 +1,8 @@
+Property 'added' was added with value: 'yes'
+Property 'addedComplex' was added with value: [complex value]
+Property 'removed' was removed
+Property 'removedNestedArray' was removed
+Property 'removedNestedObject' was removed
+Property 'updated' was updated. From 'no' to 'yes'
+Property 'updatedBoolean' was updated. From false to true
+Property 'updatedNullToNumeric' was updated. From null to 123

@@ -1,0 +1,11 @@
+{
+  "updated": "no",
+  "updatedBoolean": false,
+  "updatedNullToNumeric": null,
+  "removed": "yes",
+  "removedNestedArray": [1, 2, 5],
+  "removedNestedObject": {
+    "nested": "yes"
+  },
+  "unchanged": "yes"
+}

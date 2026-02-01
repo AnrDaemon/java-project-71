@@ -1,4 +1,4 @@
-package org.rootdir.hexlet.java.m2k;
+package org.rootdir.hexlet.java.m2k.filediffer;
 
 import java.util.ArrayList;
 import java.util.Comparator;

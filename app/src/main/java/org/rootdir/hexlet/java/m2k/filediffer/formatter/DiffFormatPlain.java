@@ -1,10 +1,13 @@
-package org.rootdir.hexlet.java.m2k;
+package org.rootdir.hexlet.java.m2k.filediffer.formatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.rootdir.hexlet.java.m2k.filediffer.NodeStatus;
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.NoArgsConstructor;
 
-public class DiffFormatPlain {
+@NoArgsConstructor
+public class DiffFormatPlain implements FormatterInterface {
 
     private static String line(String name, String cause) {
         return String.format("Property '%s' was %s", name, cause);
@@ -36,7 +39,14 @@ public class DiffFormatPlain {
         return node.asText();
     }
 
-    public static String format(List<NodeStatus> diff) {
+    /**
+     * Format node changes to a string.
+     *
+     * @param diff List of tree nodes' changes.
+     * @return Formatted changes representation.
+     */
+    @Override
+    public String format(List<NodeStatus> diff) {
         var result = new ArrayList<String>();
         for (var e : diff) {
             switch (e.getStatus()) {

@@ -1,0 +1,47 @@
+{
+  "added" : {
+    "changeType" : "added",
+    "newValue" : "yes"
+  },
+  "addedComplex" : {
+    "changeType" : "added",
+    "newValue" : [ ]
+  },
+  "removed" : {
+    "changeType" : "removed",
+    "oldValue" : "yes"
+  },
+  "removedNestedArray" : {
+    "changeType" : "removed",
+    "oldValue" : [
+      1,
+      2,
+      5
+    ]
+  },
+  "removedNestedObject" : {
+    "changeType" : "removed",
+    "oldValue" : {
+      "nested" : "yes"
+    }
+  },
+  "unchanged" : {
+    "changeType" : "unchanged",
+    "oldValue" : "yes"
+  },
+  "updated" : {
+    "changeType" : "updated",
+    "oldValue" : "no",
+    "newValue" : "yes"
+  },
+  "updatedBoolean" : {
+    "changeType" : "updated",
+    "oldValue" : false,
+    "newValue" : true
+  },
+  "updatedNullToNumeric" : {
+    "changeType" : "updated",
+    "oldValue" : null,
+    "newValue" : 123
+  }
+}

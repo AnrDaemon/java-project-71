@@ -1,4 +1,4 @@
-package org.rootdir.hexlet.java.m2k;
+package org.rootdir.hexlet.java.m2k.filediffer;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

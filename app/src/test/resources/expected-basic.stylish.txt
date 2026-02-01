@@ -1,0 +1,14 @@
+{
+  + added: yes
+  + addedComplex: []
+  - removed: yes
+  - removedNestedArray: [1, 2, 5]
+  - removedNestedObject: {nested=yes}
+    unchanged: yes
+  - updated: no
+  + updated: yes
+  - updatedBoolean: false
+  + updatedBoolean: true
+  - updatedNullToNumeric: null
+  + updatedNullToNumeric: 123
+}

@@ -1,16 +1,26 @@
-package org.rootdir.hexlet.java.m2k;
+package org.rootdir.hexlet.java.m2k.filediffer.formatter;
 
 import java.util.List;
+import org.rootdir.hexlet.java.m2k.filediffer.NodeStatus;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import lombok.NoArgsConstructor;
 
-public class DiffFormatJson {
+@NoArgsConstructor
+public class DiffFormatJson implements FormatterInterface {
 
-    public static String format(List<NodeStatus> diff) {
+    /**
+     * Format node changes to a string.
+     *
+     * @param diff List of tree nodes' changes.
+     * @return Formatted changes representation.
+     */
+    @Override
+    public String format(List<NodeStatus> diff) {
         var mapper = new ObjectMapper();
         var result = mapper.createObjectNode();
         for (var e : diff) {

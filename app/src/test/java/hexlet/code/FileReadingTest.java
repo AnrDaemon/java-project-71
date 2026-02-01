@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import org.junit.jupiter.api.BeforeAll;
 
-public class FileReadingTest {
+public abstract class FileReadingTest {
 
     private static ClassLoader loader;
 
     @BeforeAll
     static void init() {
-        loader = DifferTest.class.getClassLoader();
+        loader = FileReadingTest.class.getClassLoader();
     }
 
     /**

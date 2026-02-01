@@ -39,6 +39,13 @@ public class DiffFormatPlain implements FormatterInterface {
         return node.asText();
     }
 
+    /**
+     * Format node changes to a string.
+     *
+     * @param diff List of tree nodes' changes.
+     * @return Formatted changes representation.
+     */
+    @Override
     public String format(List<NodeStatus> diff) {
         var result = new ArrayList<String>();
         for (var e : diff) {

@@ -39,6 +39,13 @@ public class DiffFormatStylish implements FormatterInterface {
         return result.append(node.isArray() ? "]" : "}").toString();
     }
 
+    /**
+     * Format node changes to a string.
+     *
+     * @param diff List of tree nodes' changes.
+     * @return Formatted changes representation.
+     */
+    @Override
     public String format(List<NodeStatus> diff) {
         var result = new StringBuilder();
         result.append("{\n");

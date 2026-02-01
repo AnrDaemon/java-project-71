@@ -13,7 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DiffFormatJson implements FormatterInterface {
 
-
+    /**
+     * Format node changes to a string.
+     *
+     * @param diff List of tree nodes' changes.
+     * @return Formatted changes representation.
+     */
+    @Override
     public String format(List<NodeStatus> diff) {
         var mapper = new ObjectMapper();
         var result = mapper.createObjectNode();

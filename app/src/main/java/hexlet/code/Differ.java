@@ -21,8 +21,8 @@ public class Differ {
 
 
     public static String generate(String path1, String path2, String format, Boolean recursive) throws Exception {
-        var left = new SourceFileReader(Paths.get(path1));
-        var right = new SourceFileReader(Paths.get(path2));
+        var left = SourceFileReader.getReader(Paths.get(path1));
+        var right = SourceFileReader.getReader(Paths.get(path2));
 
         var parser = recursive ? new RecursiveFlattener() : new NonRecursiveFlattener();
         var leftParsed = parser.parse(left.read());

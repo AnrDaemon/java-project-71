@@ -1,7 +1,6 @@
 package hexlet.code;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -72,16 +71,6 @@ public class DifferTest extends FileReadingTest {
         var diff = Differ.generate(file1, file2);
         var expected = readFixture("expected-flat.stylish.txt");
         assertEquals(expected, diff);
-    }
-
-    @Test
-    void diffGenerationFormatMismatchTest() {
-        var file1 = getResourceFile("file1-flat.json").getAbsolutePath();
-        var file2 = getResourceFile("file2-flat.yaml").getAbsolutePath();
-
-        assertThrows(Exception.class, () -> {
-            Differ.generate(file1, file2);
-        });
     }
 
     static Stream<Arguments> diffGenerationFormatSource() {

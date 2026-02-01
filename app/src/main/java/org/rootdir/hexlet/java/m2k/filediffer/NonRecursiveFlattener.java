@@ -2,7 +2,6 @@ package org.rootdir.hexlet.java.m2k.filediffer;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.rootdir.hexlet.java.m2k.interfaces.TreeParserInterface;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.val;
 

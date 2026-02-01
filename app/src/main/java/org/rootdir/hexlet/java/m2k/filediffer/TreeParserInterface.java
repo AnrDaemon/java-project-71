@@ -1,4 +1,4 @@
-package org.rootdir.hexlet.java.m2k.interfaces;
+package org.rootdir.hexlet.java.m2k.filediffer;
 
 import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;

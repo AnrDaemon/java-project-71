@@ -184,8 +184,12 @@
         <!-- See https://checkstyle.org/config_misc.html -->
         <module name="ArrayTypeStyle"/>
         <!-- <module name="FinalParameters"/> -->
-        <!-- <module name="TodoComment"/> -->
+        <module name="TodoComment"/>
         <module name="UpperEll"/>
+
+        <module name="Indentation">
+          <property name="basicOffset" value="4"/>
+        </module>
 
         <!-- https://checkstyle.org/config_filters.html#SuppressionXpathFilter -->
         <module name="SuppressionXpathFilter">
